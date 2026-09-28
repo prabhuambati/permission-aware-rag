@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">SentinelRAG architecture</title>
+  <desc id="desc">Request authentication and tenant role authorization precede vector retrieval, grounded LLM generation, audit logging, and evaluation.</desc>
+  <defs>
+    <style>
+      .bg{fill:#f7f9fc}.box{fill:#fff;stroke:#294b8f;stroke-width:2;rx:14}.secure{fill:#e9f2ff;stroke:#1769aa;stroke-width:2;rx:14}.store{fill:#fff5df;stroke:#b26a00;stroke-width:2;rx:14}.eval{fill:#eaf8ee;stroke:#25834b;stroke-width:2;rx:14}.title{font:700 22px sans-serif;fill:#12223c}.label{font:700 17px sans-serif;fill:#172b4d}.body{font:15px sans-serif;fill:#40516d}.arrow{stroke:#49627e;stroke-width:2.5;fill:none;marker-end:url(#arrowhead)}.small{font:13px sans-serif;fill:#5c6c83}
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#49627e"/></marker>
+  </defs>
+  <rect class="bg" width="1200" height="620"/>
+  <text x="52" y="50" class="title">SentinelRAG · security-first multi-tenant RAG</text>
+  <text x="52" y="78" class="small">Authorization is enforced before any document reaches embeddings or retrieval.</text>
+
+  <rect x="52" y="125" width="190" height="112" class="box"/>
+  <text x="72" y="158" class="label">1. Request</text>
+  <text x="72" y="187" class="body">Question + demo user</text>
+  <text x="72" y="210" class="body">OIDC/JWT in production</text>
+
+  <rect x="292" y="125" width="225" height="112" class="secure"/>
+  <text x="312" y="158" class="label">2. Policy gate</text>
+  <text x="312" y="187" class="body">Tenant + role filtering</text>
+  <text x="312" y="210" class="body">before retrieval</text>
+
+  <rect x="567" y="125" width="245" height="112" class="box"/>
+  <text x="587" y="158" class="label">3. Vector retrieval</text>
+  <text x="587" y="187" class="body">OpenAI embeddings</text>
+  <text x="587" y="210" class="body">pgvector cosine search</text>
+
+  <rect x="862" y="125" width="285" height="112" class="box"/>
+  <text x="882" y="158" class="label">4. Grounded answer</text>
+  <text x="882" y="187" class="body">LLM + [Source N] citations</text>
+  <text x="882" y="210" class="body">or offline extractive mode</text>
+
+  <path d="M242 181 H292" class="arrow"/><path d="M517 181 H567" class="arrow"/><path d="M812 181 H862" class="arrow"/>
+
+  <rect x="158" y="330" width="270" height="130" class="store"/>
+  <text x="178" y="365" class="label">PostgreSQL + pgvector</text>
+  <text x="178" y="394" class="body">Documents + embeddings</text>
+  <text x="178" y="418" class="body">Tenant-scoped metadata</text>
+  <text x="178" y="442" class="body">HNSW vector index</text>
+
+  <rect x="465" y="330" width="270" height="130" class="store"/>
+  <text x="485" y="365" class="label">Audit log</text>
+  <text x="485" y="394" class="body">Queries and citations</text>
+  <text x="485" y="418" class="body">Denied actions</text>
+  <text x="485" y="442" class="body">Tenant-scoped history</text>
+
+  <rect x="772" y="330" width="270" height="130" class="eval"/>
+  <text x="792" y="365" class="label">Evaluation harness</text>
+  <text x="792" y="394" class="body">Recall@K · MRR · nDCG</text>
+  <text x="792" y="418" class="body">Groundedness · coverage</text>
+  <text x="792" y="442" class="body">Golden question set</text>
+
+  <path d="M690 237 V290 H293 V330" class="arrow"/><path d="M690 237 V290 H600 V330" class="arrow"/><path d="M1005 237 V290 H907 V330" class="arrow"/>
+  <text x="52" y="548" class="small">SQLite + application cosine similarity remains available for local development and tests.</text>
+</svg>

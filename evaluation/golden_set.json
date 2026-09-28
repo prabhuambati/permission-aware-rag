@@ -1,0 +1,32 @@
+[
+  {
+    "id": "acme_refund_viewer",
+    "user": "cara",
+    "question": "How many days do Acme customers have to request a refund?",
+    "relevant_titles": ["Acme refund policy"],
+    "answer_terms": ["30", "days"],
+    "answerable": true
+  },
+  {
+    "id": "acme_roadmap_analyst",
+    "user": "bob",
+    "question": "What does the Q4 roadmap prioritize?",
+    "relevant_titles": ["Acme internal roadmap"],
+    "answer_terms": ["offline", "SSO"]
+  },
+  {
+    "id": "globex_refund_analyst",
+    "user": "diego",
+    "question": "How long can Globex customers request a refund?",
+    "relevant_titles": ["Globex refund policy"],
+    "answer_terms": ["14", "days"]
+  },
+  {
+    "id": "role_filtered_finance_question",
+    "user": "bob",
+    "question": "Who can approve invoice adjustments above 10000 dollars?",
+    "relevant_titles": [],
+    "answer_terms": ["authorized"],
+    "answerable": false
+  }
+]

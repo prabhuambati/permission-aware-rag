@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SentinelRAG</title>
+  <style>
+    body { font-family: Inter, system-ui, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #172033; background: #f6f8fb; }
+    .card { background: white; border: 1px solid #dce2ec; border-radius: 14px; padding: 24px; margin: 18px 0; box-shadow: 0 3px 14px #14213d0d; }
+    h1 { margin-bottom: 4px; } .muted { color: #60708a; }
+    input, textarea, button { font: inherit; border-radius: 8px; border: 1px solid #c7d1e0; padding: 10px; }
+    input, textarea { width: 100%; box-sizing: border-box; margin: 6px 0 14px; }
+    textarea { min-height: 90px; } button { background: #2855d9; color: white; border: none; cursor: pointer; }
+    button:hover { background: #193da8; } pre { white-space: pre-wrap; background: #101827; color: #d9e4ff; padding: 18px; border-radius: 10px; overflow: auto; }
+    .pill { display: inline-block; background: #e8efff; color: #2855d9; border-radius: 999px; padding: 4px 10px; margin-right: 5px; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h1>SentinelRAG</h1>
+  <p class="muted">Permission-aware multi-tenant RAG demo. Try <span class="pill">alice</span><span class="pill">bob</span><span class="pill">cara</span><span class="pill">diego</span> to see policy-filtered retrieval.</p>
+  <p id="status" class="muted">Loading provider status...</p>
+  <div class="card">
+    <label>Demo user</label>
+    <input id="user" value="bob" />
+    <label>Question</label>
+    <textarea id="question">What is the customer refund window?</textarea>
+    <button onclick="ask()">Ask securely</button>
+  </div>
+  <div class="card"><h2>Answer</h2><pre id="result">Your answer and authorized citations will appear here.</pre></div>
+  <script>
+    async function loadStatus() {
+      const response = await fetch('/health');
+      const data = await response.json();
+      document.getElementById('status').textContent = `Embeddings: ${data.embedding_provider} (${data.embedding_model}) · LLM: ${data.llm_provider} (${data.llm_model})`;
+    }
+    async function ask() {
+      const result = document.getElementById('result');
+      result.textContent = 'Retrieving only documents allowed for this user...';
+      const response = await fetch('/query', { method: 'POST', headers: {'Content-Type': 'application/json', 'X-Demo-User': document.getElementById('user').value}, body: JSON.stringify({question: document.getElementById('question').value}) });
+      result.textContent = JSON.stringify(await response.json(), null, 2);
+    }
+    loadStatus();
+  </script>
+</body>
+</html>
